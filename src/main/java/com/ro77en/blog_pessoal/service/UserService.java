@@ -38,7 +38,7 @@ public class UserService {
     }
 
     @Transactional
-    public User editUser(String id, UserDTO userDTO) {
+    public User editUser(Integer id, UserDTO userDTO) {
         var user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         user.setUsername(userDTO.username());
@@ -47,6 +47,14 @@ public class UserService {
         }
 
         return userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUser(Integer id) {
+        var user = userRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        System.out.println(user.getId());
+        userRepository.delete(user);
     }
 
     public List<User> getUsers() {

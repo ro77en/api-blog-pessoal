@@ -39,9 +39,15 @@ public class UserController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> editUser(@PathVariable String id, @RequestBody UserDTO data) {
+    public ResponseEntity<UserResponseDTO> editUser(@PathVariable Integer id, @RequestBody UserDTO data) {
         User user = userService.editUser(id, data);
         UserResponseDTO responseDTO = new UserResponseDTO(user.getId(), user.getUsername(), user.getProfilePicUrl());
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
