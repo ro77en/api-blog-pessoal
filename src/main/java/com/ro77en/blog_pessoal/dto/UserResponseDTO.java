@@ -1,4 +1,4 @@
 package com.ro77en.blog_pessoal.dto;
 
-public record UserResponseDTO(String id, String username, String profilePicUrl) {
+public record UserResponseDTO(Integer id, String username, String profilePicUrl) {
 }

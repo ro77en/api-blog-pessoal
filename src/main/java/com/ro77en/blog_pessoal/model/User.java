@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 @Table(name = "USERS")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -26,7 +26,7 @@ public class User {
     public User() {
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
