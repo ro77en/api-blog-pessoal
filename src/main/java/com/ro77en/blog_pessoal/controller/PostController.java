@@ -5,10 +5,7 @@ import com.ro77en.blog_pessoal.model.Post;
 import com.ro77en.blog_pessoal.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -24,5 +21,11 @@ public class PostController {
     public ResponseEntity<Post> createPost(@RequestBody PostDTO data) {
         Post newPost = postService.createPost(data);
         return ResponseEntity.status(HttpStatus.CREATED).body(newPost);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Post> updatePost(@PathVariable Integer id, @RequestBody PostDTO data) {
+        Post updatedPost = postService.updatePost(id, data);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedPost);
     }
 }

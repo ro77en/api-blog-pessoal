@@ -9,6 +9,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 public class PostService {
 
@@ -35,6 +37,22 @@ public class PostService {
         post.setUser(user);
         post.setCategory(category);
         user.getPosts().add(post);
+
+        return postRepository.save(post);
+    }
+
+    @Transactional
+    public Post updatePost(Integer postId, PostDTO postDTO) {
+        var post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found"));
+
+        var category = categoryRepository.findById(postDTO.categoryId())
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+
+        post.setCategory(category);
+        post.setContent(postDTO.content());
+        post.setTitle(postDTO.title());
+        post.setTimestamp(LocalDateTime.now());
 
         return postRepository.save(post);
     }
