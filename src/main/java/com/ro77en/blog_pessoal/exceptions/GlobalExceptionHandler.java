@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ApiError> handleEntityNotFound(EntityNotFoundException e) {
-        var apiError = new ApiError(HttpStatus.NOT_FOUND, "Resource not found");
+        var apiError = new ApiError(HttpStatus.NOT_FOUND, e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
 
