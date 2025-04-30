@@ -44,7 +44,10 @@ public class UserService {
         var user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         user.setUsername(userDTO.username());
-        user.setProfilePicUrl(userDTO.profilePicUrl());
+        if (userDTO.profilePicUrl() != null) {
+            user.setProfilePicUrl(userDTO.profilePicUrl());
+        }
+
         return user;
     }
 
