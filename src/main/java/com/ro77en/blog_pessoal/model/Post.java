@@ -22,6 +22,11 @@ public class Post {
     @JsonIgnoreProperties("posts")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    @JsonIgnoreProperties("posts")
+    private Category category;
+
     public Post(String title, String content) {
         this.title = title;
         this.content = content;
@@ -65,5 +70,9 @@ public class Post {
 
     public void setUser(User author) {
         this.user = author;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

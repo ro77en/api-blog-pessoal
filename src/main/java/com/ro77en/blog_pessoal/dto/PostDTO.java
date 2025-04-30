@@ -1,4 +1,6 @@
 package com.ro77en.blog_pessoal.dto;
 
-public record PostDTO(String title, String content, Integer userId) {
+import com.ro77en.blog_pessoal.model.Category;
+
+public record PostDTO(String title, String content, Integer userId, Integer categoryId) {
 }
