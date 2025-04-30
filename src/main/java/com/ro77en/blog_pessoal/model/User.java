@@ -21,7 +21,7 @@ public class User {
     private String profilePicUrl;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Post> posts = new ArrayList<>();
+    private final List<Post> posts = new ArrayList<>();
 
     public User(String username, String password, String profilePicUrl) {
         this.username = username;
