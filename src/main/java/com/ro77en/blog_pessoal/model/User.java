@@ -2,6 +2,9 @@ package com.ro77en.blog_pessoal.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -16,6 +19,9 @@ public class User {
     private String password;
 
     private String profilePicUrl;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Post> posts = new ArrayList<>();
 
     public User(String username, String password, String profilePicUrl) {
         this.username = username;
@@ -52,5 +58,9 @@ public class User {
 
     public void setProfilePicUrl(String profilePicUrl) {
         this.profilePicUrl = profilePicUrl;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
     }
 }
