@@ -1,6 +1,7 @@
 package com.ro77en.blog_pessoal.exceptions;
 
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleUsernameExists(EntityExistsException e) {
         var apiError = new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(apiError);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ApiError> handleEntityNotFound(EntityNotFoundException e) {
+        var apiError = new ApiError(HttpStatus.NOT_FOUND, "Resource not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
