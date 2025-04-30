@@ -32,7 +32,7 @@ public class UserController {
         List<User> users = userService.getUsers();
 
         List<UserResponseDTO> responseDTOList = users.stream()
-                .map(user -> new UserResponseDTO(user.getId(), user.getUsername(), user.getPassword()))
+                .map(user -> new UserResponseDTO(user.getId(), user.getUsername(), user.getProfilePicUrl()))
                 .toList();
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDTOList);
