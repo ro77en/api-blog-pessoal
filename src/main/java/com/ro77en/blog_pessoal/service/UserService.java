@@ -7,6 +7,9 @@ import jakarta.persistence.EntityExistsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -19,7 +22,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public User createNewUser(UserRegisterDTO userRegisterDTO) {
         if (userRepository.existsByUsername(userRegisterDTO.username())) {
             throw new EntityExistsException("Username already exists");
@@ -34,5 +37,9 @@ public class UserService {
         User newUser = new User(userRegisterDTO.username(), encodedPassword, profilePic);
 
         return userRepository.save(newUser);
+    }
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 }
