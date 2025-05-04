@@ -56,4 +56,10 @@ public class PostService {
 
         return postRepository.save(post);
     }
+
+    @Transactional
+    public void deletePost(Integer postId) {
+        if (!postRepository.existsById(postId)) throw new EntityNotFoundException("Post not found");
+        postRepository.deleteById(postId);
+    }
 }

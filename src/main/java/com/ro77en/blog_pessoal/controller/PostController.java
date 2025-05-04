@@ -28,4 +28,10 @@ public class PostController {
         Post updatedPost = postService.updatePost(id, data);
         return ResponseEntity.status(HttpStatus.OK).body(updatedPost);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
+        postService.deletePost(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
