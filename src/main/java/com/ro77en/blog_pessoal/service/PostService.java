@@ -1,7 +1,9 @@
 package com.ro77en.blog_pessoal.service;
 
 import com.ro77en.blog_pessoal.dto.PostDTO;
+import com.ro77en.blog_pessoal.model.Category;
 import com.ro77en.blog_pessoal.model.Post;
+import com.ro77en.blog_pessoal.model.User;
 import com.ro77en.blog_pessoal.repository.CategoryRepository;
 import com.ro77en.blog_pessoal.repository.PostRepository;
 import com.ro77en.blog_pessoal.repository.UserRepository;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PostService {
@@ -22,6 +25,24 @@ public class PostService {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
+    }
+
+    public List<Post> getPosts(Integer authorId, Integer categoryId) {
+        if (authorId != null) {
+            User author = userRepository.findById(authorId)
+                    .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+            return author.getPosts();
+        }
+
+        if (categoryId != null) {
+            Category category = categoryRepository.findById(categoryId)
+                    .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+
+            return category.getPosts();
+        }
+
+        return postRepository.findAll();
     }
 
     @Transactional
