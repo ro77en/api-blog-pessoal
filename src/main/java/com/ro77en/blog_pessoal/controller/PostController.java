@@ -19,7 +19,8 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping ResponseEntity<List<Post>> getPosts(
+    @GetMapping
+    public ResponseEntity<List<Post>> getPosts(
             @RequestParam(required = false) Integer authorId,
             @RequestParam(required = false) Integer categoryId) {
         List<Post> posts = postService.getPosts(authorId, categoryId);
