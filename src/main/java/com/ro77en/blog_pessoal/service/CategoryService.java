@@ -4,6 +4,7 @@ import com.ro77en.blog_pessoal.dto.CategoryDTO;
 import com.ro77en.blog_pessoal.model.Category;
 import com.ro77en.blog_pessoal.repository.CategoryRepository;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,5 +32,14 @@ public class CategoryService {
 
     public List<Category> getCategories() {
         return categoryRepository.findAll();
+    }
+
+    @Transactional
+    public Category updateCategory(Integer id, CategoryDTO categoryDTO) {
+        Category updatedCategory = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+
+        updatedCategory.setTitle(categoryDTO.title());
+        return categoryRepository.save(updatedCategory);
     }
 }

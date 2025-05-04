@@ -25,6 +25,12 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(category);
     }
 
+    @PostMapping("/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable Integer id, @RequestBody CategoryDTO data) {
+        Category category = categoryService.updateCategory(id, data);
+        return ResponseEntity.status(HttpStatus.OK).body(category);
+    }
+
     @GetMapping
     public ResponseEntity<List<Category>> getCategories() {
         List<Category> categories = categoryService.getCategories();
