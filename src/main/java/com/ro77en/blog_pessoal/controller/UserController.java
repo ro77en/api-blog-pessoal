@@ -20,13 +20,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<UserResponseDTO> createNewUser(@RequestBody UserDTO data) {
-        User newUser = userService.createNewUser(data);
-        UserResponseDTO responseDTO = new UserResponseDTO(newUser.getId(), newUser.getUsername(), newUser.getProfilePicUrl());
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
-    }
-
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getUsers() {
         List<User> users = userService.getUsers();
