@@ -3,12 +3,8 @@ package com.ro77en.blog_pessoal.service;
 import com.ro77en.blog_pessoal.dto.UserDTO;
 import com.ro77en.blog_pessoal.model.User;
 import com.ro77en.blog_pessoal.repository.UserRepository;
-import com.ro77en.blog_pessoal.security.UserAuthenticated;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -63,12 +59,5 @@ public class UserService implements UserDetailsService {
 
     public List<User> getUsers() {
         return userRepository.findAll();
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .map(UserAuthenticated::new)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
     }
 }
