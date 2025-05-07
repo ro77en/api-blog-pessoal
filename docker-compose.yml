@@ -1,41 +1,20 @@
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql-blogpessoal
-    restart: always
-    ports:
-      - "3307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - blogpessoal-net
-
   app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: app-blogpessoal
     ports:
-      - "8081:8080"
+      - "8080:8080"
     environment:
-      DB_HOST: mysql
-      DB_PORT: 3306
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
     command: ["java", "-jar", "/app.jar"]
-    depends_on:
-      - mysql
     networks:
       - blogpessoal-net
-
-volumes:
-  mysql_data:
 
 networks:
   blogpessoal-net:
