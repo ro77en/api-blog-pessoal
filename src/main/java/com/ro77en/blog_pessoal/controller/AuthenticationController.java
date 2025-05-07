@@ -34,6 +34,10 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenDTO> authenticate(@RequestBody LoginDTO loginDTO) {
+        if (loginDTO.username().isEmpty() || loginDTO.password().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(loginDTO.username(), loginDTO.password());
 
