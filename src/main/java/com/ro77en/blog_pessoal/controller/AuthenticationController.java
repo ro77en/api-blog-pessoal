@@ -4,6 +4,7 @@ import com.ro77en.blog_pessoal.dto.LoginDTO;
 import com.ro77en.blog_pessoal.dto.TokenDTO;
 import com.ro77en.blog_pessoal.dto.UserDTO;
 import com.ro77en.blog_pessoal.dto.UserResponseDTO;
+import com.ro77en.blog_pessoal.exceptions.ApiError;
 import com.ro77en.blog_pessoal.model.User;
 import com.ro77en.blog_pessoal.security.JwtService;
 import com.ro77en.blog_pessoal.service.UserService;
@@ -33,9 +34,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDTO> authenticate(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<?> authenticate(@RequestBody LoginDTO loginDTO) {
         if (loginDTO.username().isEmpty() || loginDTO.password().isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            var apiError = new ApiError(HttpStatus.BAD_REQUEST, "All fields must be filled");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
         }
 
         UsernamePasswordAuthenticationToken authToken =
@@ -51,7 +53,11 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> createNewUser(@RequestBody UserDTO data) {
+    public ResponseEntity<?> createNewUser(@RequestBody UserDTO data) {
+        if (data.username().isEmpty() || data.password().isEmpty()) {
+            var apiError = new ApiError(HttpStatus.BAD_REQUEST, "All fields must be filled");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+        }
         User newUser = userService.createNewUser(data);
         UserResponseDTO responseDTO = new UserResponseDTO(newUser.getId(), newUser.getUsername(), newUser.getProfilePicUrl());
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
