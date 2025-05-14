@@ -28,7 +28,9 @@ public class UserService {
             throw new EntityExistsException("Username already exists");
         }
 
-        String profilePic = userDTO.profilePicUrl() == null ? "https://cdn-icons-png.flaticon.com/512/9187/9187604.png" : userDTO.profilePicUrl();
+        String profilePic = userDTO.profilePicUrl() == null || userDTO.profilePicUrl().isBlank()
+                ? "https://cdn-icons-png.flaticon.com/512/9187/9187604.png"
+                : userDTO.profilePicUrl();
 
         String encodedPassword = passwordEncoder.encode(userDTO.password());
 
