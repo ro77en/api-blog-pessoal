@@ -38,7 +38,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> editUser(@PathVariable Integer id, @RequestBody UserDTO data) {
         User user = userService.editUser(id, data);
         UserResponseDTO responseDTO = new UserResponseDTO(user.getId(), user.getUsername(), user.getProfilePicUrl());
