@@ -33,7 +33,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newPost);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Post> updatePost(@PathVariable Integer id, @RequestBody PostDTO data) {
         Post updatedPost = postService.updatePost(id, data);
         return ResponseEntity.status(HttpStatus.OK).body(updatedPost);
